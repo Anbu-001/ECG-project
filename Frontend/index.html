@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Disease Classifier</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; text-align: center; }
+        input, button { padding: 10px; margin: 10px; }
+        #result { margin-top: 20px; font-size: 1.2em; }
+    </style>
+</head>
+<body>
+
+    <h1>ECG Disease Classifier</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <br>
+    <button onclick="uploadAndPredict()">Diagnose</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function uploadAndPredict() {
+            const fileInput = document.getElementById('imageInput');
+            const resultDiv = document.getElementById('result');
+
+            if (!fileInput.files.length) {
+                alert("Please upload an image!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("image", fileInput.files[0]);
+
+            resultDiv.textContent = "Processing...";
+
+            try {
+                const response = await fetch("http://127.0.0.1:5000/predict", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `Predicted Disease: <b>${data.prediction}</b><br>Confidence: <b>${data.confidence.toFixed(2)}%</b>`;
+                } else {
+                    resultDiv.textContent = "Error: " + data.error;
+                }
+            } catch (error) {
+                resultDiv.textContent = "Error: " + error.message;
+            }
+        }
+    </script>
+
+</body>
+</html>
