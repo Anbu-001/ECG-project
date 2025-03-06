@@ -19,39 +19,39 @@
 
     <div id="result"></div>
 
-    <script>
-        async function uploadAndPredict() {
-            const fileInput = document.getElementById('imageInput');
-            const resultDiv = document.getElementById('result');
+<script>
+    async function uploadAndPredict() {
+        const fileInput = document.getElementById('imageInput');
+        const resultDiv = document.getElementById('result');
 
-            if (!fileInput.files.length) {
-                alert("Please upload an image!");
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append("image", fileInput.files[0]);
-
-            resultDiv.textContent = "Processing...";
-
-            try {
-                const response = await fetch("http://127.0.0.1:5000/predict", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    resultDiv.innerHTML = `Predicted Disease: <b>${data.prediction}</b><br>Confidence: <b>${data.confidence.toFixed(2)}%</b>`;
-                } else {
-                    resultDiv.textContent = "Error: " + data.error;
-                }
-            } catch (error) {
-                resultDiv.textContent = "Error: " + error.message;
-            }
+        if (!fileInput.files.length) {
+            alert("Please upload an image!");
+            return;
         }
-    </script>
+
+        const formData = new FormData();
+        formData.append("image", fileInput.files[0]);
+
+        resultDiv.textContent = "Processing...";
+
+        try {
+            const response = await fetch("/predict", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                resultDiv.innerHTML = `Predicted Disease: <b>${data.prediction}</b><br>Confidence: <b>${data.confidence.toFixed(2)}%</b>`;
+            } else {
+                resultDiv.textContent = "Error: " + data.error;
+            }
+        } catch (error) {
+            resultDiv.textContent = "Error: " + error.message;
+        }
+    }
+</script>
 
 </body>
 </html>
