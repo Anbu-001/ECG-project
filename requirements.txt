@@ -12,3 +12,4 @@ h5py
 gunicorn
 requests
 joblib
+flask_cors
