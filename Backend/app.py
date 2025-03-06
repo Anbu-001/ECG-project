@@ -19,7 +19,7 @@ resnet = ResNet50(weights="imagenet", include_top=False, input_shape=(224, 224, 
 resnet.trainable = False
 
 # Class names
-class_names = ["arrhythmia", "chd", "mi", "normal"]
+class_names = ["arrhythmia", "H_mi", "mi", "normal"]
 
 def preprocess_image(image):
     img = image.resize((224, 224))
