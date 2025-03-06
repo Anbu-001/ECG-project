@@ -11,13 +11,6 @@ import os
 app = Flask(__name__, template_folder='templates')
 CORS(app)
 
-
-
-
-    
-
-
-
 # Load the trained model
 model = load_model("ecg_lstm_model.h5")
 
@@ -60,9 +53,7 @@ def predict():
 @app.route("/", methods=["GET"])
 def home():
     return render_template('index.html')
-    return "✅ ECG Disease Classifier Backend is Running!"
 
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
-
