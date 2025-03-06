@@ -13,9 +13,8 @@ CORS(app)
 
 
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+
+    
 
 
 
@@ -60,6 +59,7 @@ def predict():
 
 @app.route("/", methods=["GET"])
 def home():
+    return render_template('index.html')
     return "✅ ECG Disease Classifier Backend is Running!"
 
 
